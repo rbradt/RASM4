@@ -13,7 +13,7 @@ endl:	.byte 10
 	
 	
 CLS:
-	push {r4-r8, r10, r11, lr}
+	push {r1-r11, lr}
 	
 loop:
 	cmp r3, #50
@@ -24,8 +24,7 @@ loop:
 	
 	add r3, #1
 
-
 endLoop:
-	pop {r4-r8, r10, r11, lr}
+	pop {r1-r11, lr}
 	bx lr
 
