@@ -1,12 +1,28 @@
 	.extern malloc
 	.extern free
 	.global llInsert
-	
-@ input: r1 = head, r2 = tail, r3 = address of data
-@ output: r1 = new head, r2 = new tail
+/**************************************************************************
+ * 								llInsert
+ *
+ *		This function inserts a new node with the data passed into the link
+ *	list specified by head and tail. If the head and tail are not specified
+ *	this function initializes a new singly linked list and inserts the data
+ *	into it.
+ *-------------------------------------------------------------------------
+ * input:
+ *	r1 = head
+ *	r2 = tail
+ *	r3 = data
+ * 
+ * output:
+ *	r1 = new head
+ *	r2 = new tail
+ *-------------------------------------------------------------------------
+ * note:
+ *	Call this function with a 0 in r1 to create a new linked list.
+ **************************************************************************/
 llInsert:
 	push {r3-r11, lr}
-	
 	
 	mov r0, #8		@ create new node
 	push {r1-r3}
