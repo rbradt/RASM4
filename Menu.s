@@ -16,8 +16,8 @@ strMemory:		.asciz	"Data Structure Memory Consumption: "
 strNodes:		.asciz	"Number of Nodes: "
 strView:		.asciz	"<1> View all strings\n\n"
 strAdd:			.asciz	"<2> Add string\n"
-strFromKeyb:	.asciz	"\t<a> from Keyboard\n"
-strFromFile:	.asciz	"\t<b> from File. Static file named input.txt\n\n"
+strFromKeyb:		.asciz	"\t<a> from Keyboard\n"
+strFromFile:		.asciz	"\t<b> from File. Static file named input.txt\n\n"
 strDelete:		.asciz	"<3> Delete String. Given an index #, delete the entire string and de-allocate memory (including the node).\n\n"
 strEdit:		.asciz	"<4> Edit String. Given an index #, replace old string w/ new string. Allocate/De-allocate as needed.\n\n"
 strSearch:		.asciz	"<5> String Search. Regardless of case, return all strings that match the substring given.\n\n"
@@ -33,7 +33,7 @@ Menu:
 	ldr r1, =strMemory			@ Output memory consumption prompt
 	bl putstring
 	
-	mov r1, r2					@ Output memory consumption
+	mov r1, r2				@ Output memory consumption
 	bl putstring
 	
 	ldr r1, =endl
@@ -42,7 +42,7 @@ Menu:
 	ldr r1, =strNodes			@ Output number of nodes prompt
 	bl putstring
 	
-	mov r1, r3					@ Output number of nodes
+	mov r1, r3				@ Output number of nodes
 	bl putstring
 	
 	ldr r1, =endl
@@ -54,10 +54,10 @@ Menu:
 	ldr r1, =strAdd				@ Output option 2
 	bl putstring
 	
-	ldr r1, =strFromKeyb		@ Output option 2a
+	ldr r1, =strFromKeyb			@ Output option 2a
 	bl putstring
 	
-	ldr r1, =strFromFile		@ Output option 2b
+	ldr r1, =strFromFile			@ Output option 2b
 	bl putstring
 	
 	ldr r1, =strDelete			@ Output option 3
