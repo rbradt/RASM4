@@ -26,15 +26,6 @@ _start:
 	mov r3, #0		@ Init num of nodes
 	
 	bl Header		@ Outputs header
-	bl Menu			@ Outputs menu - need mem consump in r2, # of nodes in r3
-
-	ldr r1, =strInput	@ Prompt user for input
-	bl putstring
-	ldr r1, =iInput
-	ldr r2, =BUFSIZE
-	bl getstring		@ Get input from user
-
-
 
 /* -------------- Open File -------------- */
 
@@ -50,9 +41,18 @@ _start:
 	ldr r1, =BUFSIZE	@ r1 points to where we want to store the data
 	bl getch
 
+/* -------------- Begin Menu Loop While Input != '7' -------------- */
+whileNotQuit:
+	bl Menu			@ Outputs menu - need mem consump in r2, # of nodes in r3
+
+	ldr r1, =strInput	@ Prompt user for input
+	bl putstring
+	ldr r1, =iInput
+	ldr r2, =BUFSIZE
+	bl getstring		@ Get input from user
+
 
 /* -------------- */
-
 
 	bl CLS			@ Clear screen function
 	
