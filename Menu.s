@@ -26,7 +26,7 @@ strQuit:		.asciz	"<7> Quit\n\n"
 endl:			.byte	10
 	
 Menu:
-	push {r4-r8, r10, r11, lr}
+	push {r1-r12, lr}
 	
 	ldr r1, =strTitle			@ Output title
 	bl putstring
@@ -76,5 +76,5 @@ Menu:
 	bl putstring
 	
 	
-	pop {r4-r8, r10, r11, lr}
+	pop {r1-r12, lr}
 	bx lr
