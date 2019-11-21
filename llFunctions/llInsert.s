@@ -4,10 +4,10 @@
 /**************************************************************************
  * 								llInsert
  *
- *		This function inserts a new node with the data passed into the link
- *	list specified by head and tail. If the head and tail are not specified
- *	this function initializes a new singly linked list and inserts the data
- *	into it.
+ *		This function inserts a new node, with the data passed, into 
+ *	the linked list specified by head and tail. If the head and tail are
+ *	not specified, this function initializes a new singly linked list and
+ *	inserts the data into it.
  *-------------------------------------------------------------------------
  * input:
  *	r1 = head
