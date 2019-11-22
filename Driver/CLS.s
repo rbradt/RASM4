@@ -20,7 +20,7 @@ loop:
 	beq endLoop
 	
 	ldr r1, =endl
-	bl putstring
+	bl putch
 	
 	add r3, #1
 
