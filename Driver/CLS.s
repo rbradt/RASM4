@@ -15,14 +15,15 @@ endl:	.byte 10
 CLS:
 	push {r1-r11, lr}
 	
+	add r3, #-1
 loop:
-	cmp r3, #50
-	beq endLoop
+	add r3, #1
 	
 	ldr r1, =endl
 	bl putch
 	
-	add r3, #1
+	cmp r3, #50
+	bne loop
 
 endLoop:
 	pop {r1-r11, lr}
