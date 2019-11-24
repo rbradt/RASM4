@@ -29,20 +29,6 @@ _start:
 	
 	bl Header		@ Outputs header
 
-/* -------------- Open File -------------- */
-
-	ldr r0, =infileName	@ r0 has infileName
-	mov r1, #01101		@ Flag - Can write/create/truncate
-	mov r2, #0644		@ Mode - I can read/write, others read
-
-	mov r7, #5		@ Open file (returns fileName)
-	svc 0			@ Supervisor call
-
-	mov r0, r4		@ r0 now has fileName
-	mov r7, #3		@ Read file
-	ldr r1, =BUFSIZE	@ r1 points to where we want to store the data
-
-
 /* -------------- Begin Menu Loop While Input != '7' -------------- */
 whileNotQuit:
 	bl Menu			@ Outputs menu - need mem consump in r2, # of nodes in r3
@@ -63,8 +49,10 @@ switch:
 	
 	cmp r8, #1
 	beq ifChoice1
-	cmp r8, #2
-	beq ifChoice2
+	cmp r8, #'2a'
+	beq ifChoice2a
+	cmp r8, #'2b'
+	beq ifChoice2b
 	cmp r8, #3
 	beq ifChoice3
 	cmp r8, #4
@@ -79,7 +67,11 @@ ifChoice1:			@ If user chooses to view all strings
 	/* FUNC HERE */
 	b whileNotQuit		@ Go back to menu
 	
-ifChoice2:			@ If user chooses to add string
+ifChoice2a:			@ If user chooses to add string from keyboard
+	/* FUNC HERE */
+	b whileNotQuit		@ Go back to menu
+	
+ifChoice2b:			@ If user chooses to add string from file
 	/* FUNC HERE */
 	b whileNotQuit		@ Go back to menu
 	
