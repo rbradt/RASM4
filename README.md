@@ -7,10 +7,8 @@
             Menu.s            - Output menu
             CLS.s             - Output clear screen
             Func Name         - add strings to linked list from keyboard
-           String List Algorithms:
-            Func Name         - output strings from linked list
            File IO:
-            Func Name         - save strings to a file
+            SaveFile.s        - save strings to a file from linked list
  
  
  Riley:    Linked List:
