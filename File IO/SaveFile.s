@@ -4,7 +4,7 @@
 	Purpose:	Saves linked list to output.txt.
 	------------------------------------------
 	Parameters needed:
-    None.
+    		None.
 	------------------------------------------*/
   
 	.global SaveFile
@@ -14,8 +14,7 @@
   
   
   SaveFile:
-  
-    push {r1-r11, lr}
+ 	   push {r1-r11, lr}
     
     /* -------------- Open File -------------- */
 
@@ -23,19 +22,19 @@
   	mov r1, #01101     	@ Flag - Can write/create/truncate
   	mov r2, #0644	    	@ Mode - I can read/write, others read
 
-  	mov r7, #5		    	@ Open file (returns fileName)
-  	svc 0			        	@ Supervisor call
+  	mov r7, #5		@ Open file (returns fileName)
+  	svc 0			@ Supervisor call
   
   /* ----------------------------------------- */
   /*           TRAVERSE THRU LL HERE           */
   /* ----------------------------------------- */
    
-    mov r7, #4		  		@ Write to file
-  	svc 0            		@ Supervisor call
+   	mov r7, #4		@ Write to file
+  	svc 0            	@ Supervisor call
 	
-  	mov r7, #6			  	@ Close file
-    svc 0
+  	mov r7, #6		@ Close file
+  	svc 0
     
-    pop {r1-r11, lr}
-    bx lr
-    .end
+ 	pop {r1-r11, lr}
+	bx lr
+ 	.end
