@@ -28,4 +28,4 @@ loop:
 endLoop:
 	pop {r1-r11, lr}
 	bx lr
-
+	.end
