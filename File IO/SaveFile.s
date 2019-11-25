@@ -4,7 +4,8 @@
 	Purpose:	Saves linked list to output.txt.
 	------------------------------------------
 	Parameters needed:
-    		None.
+    		R1: head ptr
+		R2: tail ptr
 	------------------------------------------*/
   
 	.global SaveFile
@@ -24,14 +25,20 @@
 
   	mov r7, #5		@ Open file (returns fileName)
   	svc 0			@ Supervisor call
-  
-  /* ----------------------------------------- */
-  /*           TRAVERSE THRU LL HERE           */
-  /* ----------------------------------------- */
+	
+	ldr r5, =head		@ save head and tail
+	str r1, [r5]
+	ldr r5, =tail
+	str r2, [r5]
+	
+  loop:				@ Traverse thru ll
+  	
+	
    
    	mov r7, #4		@ Write to file
   	svc 0            	@ Supervisor call
 	
+  endLoop:
   	mov r7, #6		@ Close file
   	svc 0
     
