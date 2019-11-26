@@ -21,8 +21,8 @@
             AddFromFile.s     - add strings to a linked list from a file
  
  Both:     File IO:
-			getline.s         - read a character from a file
-			getch.s           - read a line from a file and return it in a new string
+            getline.s         - read a character from a file
+            getch.s           - read a line from a file and return it in a new string
            Misc:
             RASM4.s           - keep track of memory consumption in driver
  </pre>
