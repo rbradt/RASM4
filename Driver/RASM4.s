@@ -14,6 +14,7 @@ outFileName:		.asciz "output.txt"
 strIndex:		.asciz "Please enter the index # of the node: "
 strDeleted:		.asciz "String deleted."
 strSaved:		.asciz "Strings saved to file."
+strSubstring:	.asciz "Enter a substring to search for: "
 iInputVal:		.skip	BUFSIZE
 inputIndex:		.skip	BUFSIZE
 iIndex:			.word	0
@@ -24,6 +25,7 @@ endl:			.byte	10
 
 head:			.word 0
 tail:			.word 0
+buffer:			.space 1024
 
 	.text
 	.balign 4
@@ -186,7 +188,20 @@ ifChoice4:			@ If user chooses to edit string
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice5:			@ If user chooses to search for a string
-	/* FUNC HERE */
+	bl CLS
+	ldr r1, =strSubstring
+	bl putstring
+	ldr r1, =buffer
+	ldr r2, =1024
+	bl getstring
+
+	ldr r1, =head		@ search for string
+	ldr r1, [r1]
+	ldr r2, =tail
+	ldr r2, [r2]
+	ldr r3, =buffer
+	bl editString
+	
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice6:			@ If user chooses to save file

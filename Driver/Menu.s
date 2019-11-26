@@ -23,6 +23,7 @@ strEdit:		.asciz	"<4> Edit String. Given an index #, replace old string w/ new s
 strSearch:		.asciz	"<5> String Search. Regardless of case, return all strings that match the substring given.\n\n"
 strSave:		.asciz	"<6> Save File (output.txt)\n\n"
 strQuit:		.asciz	"<7> Quit\n\n"
+buffer:			.space	12
 endl:			.byte	10
 	
 Menu:
@@ -33,7 +34,10 @@ Menu:
 	ldr r1, =strMemory			@ Output memory consumption prompt
 	bl putstring
 	
-	mov r1, r2				@ Output memory consumption
+	
+	mov r0, r2				@ Output memory consumption
+	ldr r1, =buffer
+	bl intasc32
 	bl putstring
 	
 	ldr r1, =endl
@@ -42,7 +46,11 @@ Menu:
 	ldr r1, =strNodes			@ Output number of nodes prompt
 	bl putstring
 	
-	mov r1, r3				@ Output number of nodes
+	mov r0, r3				@ Output number of nodes
+	ldr r1, =buffer
+	mov r4, #0
+	str r4, [r1]
+	bl intasc32
 	bl putstring
 	
 	ldr r1, =endl
