@@ -17,13 +17,12 @@
  * output:
  *	r1 = new head
  *	r2 = new tail
- *	r3 = # of nodes
  *-------------------------------------------------------------------------
  * note:
  *	Call this function with a 0 in r1 to create a new linked list.
  **************************************************************************/
 llInsert:
-	push {r4-r11, lr}
+	push {r3-r11, lr}
 	
 	mov r0, #8		@ create new node
 	push {r1-r3}
@@ -37,8 +36,6 @@ llInsert:
 	cmp r1, #0
 	beq case_1
 	b case_2
-	
-	mov r3, #0		@ Clear r3, use as counter
 
 	case_1: @ initialize linked list
 		mov r1, r0
@@ -46,9 +43,8 @@ llInsert:
 	
 	case_2: @ insert node
 		str r0, [r2, #4]
-		add r3, #1	@ Keep track of # of nodes
 		
 	return:
 	mov r2, r0
-	pop {r4-r11, lr}
+	pop {r3-r11, lr}
 	bx lr
