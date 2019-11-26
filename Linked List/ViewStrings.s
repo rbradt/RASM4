@@ -29,6 +29,7 @@ loop:
 	cmp r4, r3
 	blt loop			@ Loop if less than
 	
+endLoop:
 	pop {r1-r12, lr}
 	bx lr
   .end
