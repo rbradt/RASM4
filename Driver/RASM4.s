@@ -11,13 +11,17 @@
 strInput:		.asciz "Select: "
 infileName:		.asciz "input.txt"
 outFileName:		.asciz "output.txt"
+strIndex:		.asciz "Please enter the index # of the node to delete: "
+strDeleted:		.asciz "String deleted."
 iInputVal:		.skip	BUFSIZE
+inputIndex:		.skip	BUFSIZE
+iIndex:			.word	0
 iInputInt:		.word 	0
 iMemory:		.word	0
 iNodes:			.word	0
-ptrHead:		.word	0
-ptrTail:		.word	0
-newNode:		.word	0
+endl:			.byte	10
+
+
 
 	.text
 	.balign 4
@@ -25,7 +29,7 @@ newNode:		.word	0
 _start:
 	mov r2, #0		@ Init memory consumption
 	mov r3, #0		@ Init num of nodes
-	ldr r8, =iInputInts	@ .word, where input # will be stored
+	ldr r8, =iInputInt	@ .word, where input # will be stored
 	
 	bl Header		@ Outputs header
 
@@ -74,11 +78,31 @@ ifChoice2a:			@ If user chooses to add string from keyboard
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice2b:			@ If user chooses to add string from file
-	bl AddFromFile
+	mov r6, r3		@ Need to pass in current # of nodes
+	bl AddFromFile		@ Returns in r3 the updated # of nodes
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice3:			@ If user chooses to delete string
-	/* FUNC HERE */
+	bl CLS
+	ldr r1, =strIndex
+	bl putstring
+	ldr r1, =inputIndex
+	ldr r2, =BUFSIZE
+	bl getstring
+	ldr r1, =inputIndex
+	bl ascint32		@ Change into int
+	ldr r5, =iInput
+	str r0, [r5]		@ Store index into r5
+	
+	ldr r1, =endl
+	bl putch
+	
+	mov r3, r5		@ Move index to r3 to pass into func
+	bl llRemoveAtIndex
+	
+	ldr r1, =strDeleted
+	bl putstring		@ Output confirmation
+	
 	b whileNotQuit
 
 ifChoice4:			@ If user chooses to edit string
