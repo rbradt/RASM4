@@ -19,6 +19,9 @@
   
   SaveFile:
  	   push {r1-r11, lr}
+	   
+	   str r8, [r1]		@ Put head ptr in r8
+	   str r9, [r2]		@ Put tail ptr in r9
     
     /* -------------- Open File -------------- */
 
@@ -28,11 +31,6 @@
 
   	mov r7, #5		@ Open file (returns fileName)
   	svc 0			@ Supervisor call
-	
-	ldr r5, =head		@ save head and tail
-	str r1, [r5]
-	ldr r5, =tail
-	str r2, [r5]
 	
 	mov r4, #-1		@ Counter
   loop:				@ Traverse thru ll
