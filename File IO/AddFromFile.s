@@ -9,13 +9,12 @@
  *	r1 = head
  *	r2 = tail
  *	r3 = pointer to string with file name
- *	r6 = previous # of nodes
  * 
  * output:
  *	r0 = bytes allocated
  *	r1 = new head
  *	r2 = new tail
- *	r3 = updated # of nodes
+ *	r3 = # of nodes added
  *-------------------------------------------------------------------------
  * note:
  *	Call this function with a 0 in r1 to create a new linked list.
@@ -46,6 +45,7 @@ AddFromFile:
 	ldr r2, =fileHandle		@ save file handle
 	str r0, [r2]
 	
+	mov r6, #0
 	mov r4, #0
 	loop:
 		ldr r1, =buff		@ getline from text file

@@ -22,6 +22,9 @@ iMemory:		.word	0
 iNodes:			.word	0
 endl:			.byte	10
 
+head:			.word 0
+tail:			.word 0
+
 	.text
 	.balign 4
 	
@@ -35,6 +38,10 @@ _start:
 /* -------------- Begin Menu Loop While Input != '7' -------------- */
 whileNotQuit:
 	bl CLS			@ Clear screen
+	ldr r2, =iMemory
+	ldr r2, [r2]
+	ldr r3, =iNodes
+	ldr r3, [r3]
 	bl Menu			@ Outputs menu - need mem consump in r2, # of nodes in r3
 
 	ldr r1, =strInput	@ Prompt user for input
@@ -77,8 +84,28 @@ ifChoice2a:			@ If user chooses to add string from keyboard
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice2b:			@ If user chooses to add string from file
-	mov r6, r3		@ Need to pass in current # of nodes
-	bl AddFromFile		@ Returns in r3 the updated # of nodes
+	ldr r1, =head
+	ldr r1, [r1]
+	ldr r2, =tail
+	ldr r2, [r2]
+	ldr r3, =infileName
+	bl AddFromFile		@ Returns in r3 # of nodes added to the linked list
+	
+	ldr r5, =head		@ save linked list
+	str r1, [r5]
+	ldr r5, =tail
+	str r2, [r5]
+	
+	ldr r5, =iMemory	@ update allocated memory quantity
+	ldr r6, [r5]
+	add r6, r6, r0
+	str r6, [r5]
+	
+	ldr r5, =iNodes		@ update node counter
+	ldr r6, [r5]
+	add r6, r6, r3
+	str r6, [r5]
+	
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice3:			@ If user chooses to delete string
@@ -96,9 +123,36 @@ ifChoice3:			@ If user chooses to delete string
 	ldr r1, =endl
 	bl putch
 	
-	mov r3, r5		@ Move index to r3 to pass into func
+	ldr r3, [r5]		@ Move index to r3 to pass into func
 	mov r5, #0		@ Clear r5
+	ldr r1, =head
+	ldr r1, [r1]
+	ldr r2, =tail
+	ldr r2, [r2]
 	bl llRemoveAtIndex
+	
+	ldr r5, =head		@ save linked list
+	str r1, [r5]
+	ldr r5, =tail
+	str r2, [r5]
+	
+	mov r1, r3			@ update allocated memory quantity
+	bl String_length
+	ldr r5, =iMemory
+	ldr r6, [r5]
+	add r0, r0, #1
+	sub r6, r6, r0
+	str r6, [r5]
+	
+	ldr r5, =iNodes		@ update node counter
+	ldr r6, [r5]
+	sub r6, r6, #1
+	str r6, [r5]
+	
+	push {r1-r11}		@ free string
+	mov r0, r3	
+	bl free
+	pop {r1-r11}
 	
 	ldr r1, =strDeleted
 	bl putstring		@ Output confirmation
@@ -117,7 +171,17 @@ ifChoice4:			@ If user chooses to edit string
 	ldr r5, =iInput
 	str r0, [r5]		@ Store index into r5
 	
-	/* FUNC HERE */
+	ldr r1, =head		@ edit string
+	ldr r1, [r1]
+	ldr r2, =tail
+	ldr r2, [r2]
+	ldr r3, [r5]
+	bl editString
+	
+	ldr r5, =iMemory	@ update allocated memory quantity
+	ldr r6, [r5]
+	add r6, r6, r0
+	str r6, [r5]
 	
 	b whileNotQuit		@ Go back to menu
 	

@@ -2,7 +2,7 @@
 	.extern free
 	.global llInsert
 /**************************************************************************
- * 		llInsert
+ * 								llInsert
  *
  *		This function inserts a new node, with the data passed, into 
  *	the linked list specified by head and tail. If the head and tail are
@@ -29,7 +29,7 @@ llInsert:
 	bl malloc
 	pop {r1-r3}
 	
-	str r3, [r0]		@ initialize node
+	str r3, [r0]	@ initialize node
 	mov r4, #0
 	str r4, [r0, #4]
 	

@@ -9,7 +9,9 @@
             AddFromKeyb.s     - add strings to linked list from keyboard
            File IO:
             SaveFile.s        - save strings to a file from linked list
- 
+           String List Algorithms:
+            ViewStrings.s     - view all nodes in linked list
+			
  Riley:    Linked List (data structure):
             llInsert.s        - initialize linked list/insert node
             llRemoveAtIndex.s - delete node at index
@@ -23,8 +25,6 @@
  Both:     File IO:
             getline.s         - read a character from a file
             getch.s           - read a line from a file and return it in a new string
-           String List Algorithms:
-            ViewStrings.s     - view all nodes in linked list
            Misc:
             RASM4.s           - keep track of memory consumption in driver
  </pre>
