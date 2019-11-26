@@ -6,12 +6,15 @@
 	Parameters needed:
     		R1: head ptr
 		R2: tail ptr
+		R3: # of strings in file
 	------------------------------------------*/
   
 	.global SaveFile
 	
 	.data
- outfile:   .asciz "output.txt"
+ outfile:	.asciz "output.txt"
+ strSaved:	.asciz "Saved to file."
+ endl:		.byte 10
   
   
   SaveFile:
@@ -31,16 +34,32 @@
 	ldr r5, =tail
 	str r2, [r5]
 	
+	mov r4, #-1		@ Counter
   loop:				@ Traverse thru ll
-  	
+  	add r4, #1
+	
+	
+	
 	
    
    	mov r7, #4		@ Write to file
   	svc 0            	@ Supervisor call
 	
+	cmp r4, r3		@ Compare counter to # of strings in file
+	blt loop		@ Loop again if less than
+	
   endLoop:
   	mov r7, #6		@ Close file
   	svc 0
+	
+	ldr r1, =endl
+	bl putch
+	
+	ldr r1, =strSaved	@ Output to user that strings were saved
+	bl putstring
+	
+	ldr r1, =endl
+	bl putch
     
  	pop {r1-r11, lr}
 	bx lr
