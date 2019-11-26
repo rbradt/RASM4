@@ -24,10 +24,11 @@ ViewStrings:
 	cmp r1, #0
 	beq emptyList
 	
+	ldr r1, [r1]		@ Dereference head ptr
 	ldr r2, =temp
 	str r1, [r2]		@ head -> temp
 	
-	mov r4, #-1		@ Counter
+	mov r4, #-1			@ Counter
 loop:	
 	add r4, #1
 	
@@ -45,7 +46,7 @@ loop:
 	str r6, [r2]
 	
 	cmp r4, r3
-	blt loop		@ Loop if less than
+	blt loop			@ Loop if less than
 	
 endLoop:
 	pop {r1-r12, lr}
