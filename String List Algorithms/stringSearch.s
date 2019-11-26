@@ -19,7 +19,7 @@ szNewline: .asciz "\n"
 stringSearch:
 	push {r1-r11, lr}
 	
-	ldrb r4, [r3]			@ if substring is empty
+	ldrb r4, [r3]				@ if substring is empty
 	cmp r4, #0
 	beq return
 	
@@ -30,12 +30,12 @@ stringSearch:
 	pop {r1}
 	
 	search:
-		cmp r1, #0			@ head points to null (linked list is empty)
+		cmp r1, #0			@ if current points to null the end of the linked list has been reached
 		beq return
 		
-		ldr r4, [r1]		@ load string from linked list
+		ldr r4, [r1]			@ load string from linked list
 		
-		push {r1-r3}		@ convert string to lowercase
+		push {r1-r3}			@ convert string to lowercase
 		mov r1, r4
 		bl String_toLowerCase
 		
