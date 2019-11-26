@@ -24,7 +24,8 @@ ViewStrings:
 	cmp r1, #0
 	beq emptyList
 	
-	ldr r1, [r1]		@ Dereference head ptr
+	@ This will cause an error since this just stores the string into temp
+	@ ldr r1, [r1]		@ Dereference head ptr
 	ldr r2, =temp
 	str r1, [r2]		@ head -> temp
 	
