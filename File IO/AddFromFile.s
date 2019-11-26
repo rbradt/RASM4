@@ -14,6 +14,7 @@
  *	r0 = bytes allocated
  *	r1 = new head
  *	r2 = new tail
+ *	r3 = # of nodes
  *-------------------------------------------------------------------------
  * note:
  *	Call this function with a 0 in r1 to create a new linked list.
@@ -27,7 +28,7 @@ fileHandle:	.word 0
 	
 	.text
 AddFromFile:
-	push {r3-r11, lr}
+	push {r4-r11, lr}
 
 	ldr r5, =head			@ save head and tail
 	str r1, [r5]
@@ -45,6 +46,7 @@ AddFromFile:
 	str r0, [r2]
 	
 	mov r4, #0
+	mov r6, #0
 	loop:
 		ldr r1, =buff		@ getline from text file
 		ldr r2, =fileHandle
@@ -59,7 +61,9 @@ AddFromFile:
 		ldr r2, =tail
 		ldr r2, [r2]
 		mov r3, r0
-		bl llInsert
+		bl llInsert		@ Insert node into linked list
+		add r6, #1		@ Keep track of # of nodes
+		
 		
 		ldr r5, =head		@ store new head and tail
 		str r1, [r5]
@@ -75,13 +79,14 @@ return:
 	mov r7, #6			@ Close file
 	svc 0
 	
-	ldr r1, =head		@ return r0-r2
+	ldr r1, =head		@ return r0-r3
 	ldr r1, [r1]
 	ldr r2, =tail
 	ldr r2, [r2]
 	mov r0, r4
+	mov r3, r6
 	
-	pop {r3-r11, lr}
+	pop {r4-r11, lr}
 	bx lr
 	
 	
