@@ -33,3 +33,4 @@ clearStrings:
 	mov r2, #0
 	pop {r3-r11, lr}
 	bx lr
+	.end
