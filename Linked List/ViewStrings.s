@@ -24,7 +24,6 @@ ViewStrings:
 	cmp r1, #0
 	beq emptyList
 	
-	ldr r1, [r1]		@ Dereference head ptr
 	ldr r2, =temp
 	str r1, [r2]		@ head -> temp
 	
