@@ -23,6 +23,8 @@
  Both:     File IO:
             getline.s         - read a character from a file
             getch.s           - read a line from a file and return it in a new string
+           String List Algorithms:
+            ViewStrings.s     - view all nodes in linked list
            Misc:
             RASM4.s           - keep track of memory consumption in driver
  </pre>
