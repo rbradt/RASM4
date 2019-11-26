@@ -26,6 +26,8 @@ strQuit:		.asciz	"<7> Quit\n\n"
 buffer:			.space	12
 endl:			.byte	10
 	
+	.text
+	.balign 4
 Menu:
 	push {r1-r12, lr}
 	
