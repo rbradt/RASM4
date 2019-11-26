@@ -22,8 +22,7 @@
 	   
 	   cmp r3, #0		@ If there are no strings, exit
 	   beq endLoop
-		
-	   ldr r1, [r1]		@ Dereference head ptr
+
 	   ldr r5, =temp
 	   str r1, [r5]		@ Put head in r5
     
