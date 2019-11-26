@@ -68,11 +68,11 @@ ifChoice1:			@ If user chooses to view all strings
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice2a:			@ If user chooses to add string from keyboard
-	/* FUNC HERE */
+	bl AddFromKeyb
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice2b:			@ If user chooses to add string from file
-	/* FUNC HERE */
+	bl AddFromFile
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice3:			@ If user chooses to delete string
@@ -88,7 +88,7 @@ ifChoice5:			@ If user chooses to search for a string
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice6:			@ If user chooses to save file
-	/* FUNC HERE */
+	bl SaveFile
 	b whileNotQuit		@ Go back to menu
 
 
