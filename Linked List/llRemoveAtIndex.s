@@ -22,7 +22,7 @@
  *	An invalid index will return without modifying r1, r2 or r3.
  **************************************************************************/
 llRemoveAtIndex:
-	push {r3-r11, lr}
+	push {r4-r11, lr}
 	
 	cmp r3, #0
 	beq head
@@ -47,9 +47,10 @@ llRemoveAtIndex:
 		
 	/* Delete head node */
 	head:					
-		mov r0, r1			@ update head
-		ldr r3, [r1]
-		ldr r1, [r1, #4]
+		mov r0, r1			
+		ldr r3, [r1]		@ save data
+		
+		ldr r1, [r1, #4]	@ update head
 		
 		push {r1-r5}		@ delete node
 		bl free
@@ -73,5 +74,5 @@ llRemoveAtIndex:
 		str r5, [r6, #4]	@ previous->next = current->next
 		
 	return:
-		pop {r3-r11, lr}
+		pop {r4-r11, lr}
 		bx lr
