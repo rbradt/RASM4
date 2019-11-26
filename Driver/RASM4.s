@@ -31,6 +31,7 @@ _start:
 
 /* -------------- Begin Menu Loop While Input != '7' -------------- */
 whileNotQuit:
+	bl CLS			@ Clear screen
 	bl Menu			@ Outputs menu - need mem consump in r2, # of nodes in r3
 
 	ldr r1, =strInput	@ Prompt user for input
@@ -64,7 +65,8 @@ switch:
 
 
 ifChoice1:			@ If user chooses to view all strings
-	/* FUNC HERE */
+	bl CLS
+	bl ViewStrings
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice2a:			@ If user chooses to add string from keyboard
@@ -88,7 +90,7 @@ ifChoice5:			@ If user chooses to search for a string
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice6:			@ If user chooses to save file
-	mov r4, @ Put # of strings in r4
+	mov r4, r3		@ Put # of strings in r4
 	bl SaveFile
 	b whileNotQuit		@ Go back to menu
 
