@@ -88,6 +88,7 @@ ifChoice5:			@ If user chooses to search for a string
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice6:			@ If user chooses to save file
+	mov r4, @ Put # of strings in r4
 	bl SaveFile
 	b whileNotQuit		@ Go back to menu
 
