@@ -14,8 +14,7 @@
 	
 	.global ViewStrings
 	
-	.data
-	
+	.text
 ViewStrings:
 	push {r1-r12, lr}
 	
