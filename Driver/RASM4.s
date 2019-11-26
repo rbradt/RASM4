@@ -13,6 +13,7 @@ infileName:		.asciz "input.txt"
 outFileName:		.asciz "output.txt"
 strIndex:		.asciz "Please enter the index # of the node: "
 strDeleted:		.asciz "String deleted."
+strSaved:		.asciz "Strings saved to file."
 iInputVal:		.skip	BUFSIZE
 inputIndex:		.skip	BUFSIZE
 iIndex:			.word	0
@@ -20,8 +21,6 @@ iInputInt:		.word 	0
 iMemory:		.word	0
 iNodes:			.word	0
 endl:			.byte	10
-
-
 
 	.text
 	.balign 4
@@ -118,9 +117,6 @@ ifChoice4:			@ If user chooses to edit string
 	ldr r5, =iInput
 	str r0, [r5]		@ Store index into r5
 	
-	ldr r1, =endl
-	bl putch
-	
 	/* FUNC HERE */
 	
 	b whileNotQuit		@ Go back to menu
@@ -130,14 +126,11 @@ ifChoice5:			@ If user chooses to search for a string
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice6:			@ If user chooses to save file
-	mov r4, r3		@ Put # of strings in r4
-	bl SaveFile
+	bl CLS
+	bl SaveFile		@ # of nodes must be in r3
+	ldr r1, =strSaved
+	bl putstring
 	b whileNotQuit		@ Go back to menu
-
-
-
-
-
 
 
 end:
