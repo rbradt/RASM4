@@ -43,7 +43,10 @@ stringSearch:
 		mov r2, r3
 		bl String_indexOf_3
 		
-		bl free				@ free lowercase string
+		push {r0}			@ free lowercase string
+		mov r0, r1			
+		bl free	
+		pop {r0}
 		pop {r1-r3}
 		
 		cmp r0, #-1			@ if substring does not exist in string proceed to next string
