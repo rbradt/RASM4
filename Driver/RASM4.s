@@ -10,12 +10,12 @@
 	.data
 strInput:		.asciz "Select: "
 infileName:		.asciz "input.txt"
-outFileName:	.asciz "output.txt"
+outFileName:		.asciz "output.txt"
 strChoice2:		.asciz "\n<a> From Keyboard\n<b> From File\n"
 strIndex:		.asciz "Please enter the index # of the node: "
 strDeleted:		.asciz "String deleted."
 strSaved:		.asciz "Strings saved to file."
-strSubstring:	.asciz "Enter a substring to search for: "
+strSubstring:		.asciz "Enter a substring to search for: "
 iInputVal:		.skip	BUFSIZE
 inputIndex:		.skip	BUFSIZE
 iIndex:			.word	0
