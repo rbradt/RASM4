@@ -12,13 +12,15 @@
 	.global SaveFile
 	
 	.data
- outfile:	.asciz "output.txt"
- strSaved:	.asciz "Saved to file."
- endl:		.byte 10
+ outfile:	.asciz	"output.txt"
+ endl:		.byte	10
   
   
   SaveFile:
  	   push {r1-r11, lr}
+	   
+	   str r8, [r1]		@ Put head in r8
+	   str r9, [r2]		@ Put tail in r9
     
     /* -------------- Open File -------------- */
 
@@ -29,19 +31,12 @@
   	mov r7, #5		@ Open file (returns fileName)
   	svc 0			@ Supervisor call
 	
-	ldr r5, =head		@ save head and tail
-	str r1, [r5]
-	ldr r5, =tail
-	str r2, [r5]
-	
 	mov r4, #-1		@ Counter
-  loop:				@ Traverse thru ll
+  loop:	
   	add r4, #1
 	
-	
-	
-	
-   
+	ldr r8, [r8, #4]	@ Traverse thru ll
+
    	mov r7, #4		@ Write to file
   	svc 0            	@ Supervisor call
 	
@@ -51,15 +46,6 @@
   endLoop:
   	mov r7, #6		@ Close file
   	svc 0
-	
-	ldr r1, =endl
-	bl putch
-	
-	ldr r1, =strSaved	@ Output to user that strings were saved
-	bl putstring
-	
-	ldr r1, =endl
-	bl putch
     
  	pop {r1-r11, lr}
 	bx lr
