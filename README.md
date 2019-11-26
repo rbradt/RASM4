@@ -6,7 +6,7 @@
             Header.s          - Output header
             Menu.s            - Output menu
             CLS.s             - Output clear screen
-            Func Name         - add strings to linked list from keyboard
+            AddFromKeyb.s     - add strings to linked list from keyboard
            File IO:
             SaveFile.s        - save strings to a file from linked list
  
@@ -21,7 +21,7 @@
 		 
  
  Both:     File IO:
-            Func Name         - add strings from a file
+            AddFromFile.s     - add strings from a file
            Misc:
             RASM4.s           - keep track of memory consumption in driver
  </pre>
