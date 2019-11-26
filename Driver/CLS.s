@@ -11,7 +11,7 @@
 	.data
 endl:	.byte 10
 	
-	
+	.balign 4
 CLS:
 	push {r1-r11, lr}
 	
