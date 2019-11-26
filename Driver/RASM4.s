@@ -10,7 +10,8 @@
 	.data
 strInput:		.asciz "Select: "
 infileName:		.asciz "input.txt"
-outFileName:		.asciz "output.txt"
+outFileName:	.asciz "output.txt"
+strChoice2:		.asciz "\n<a> From Keyboard\n<b> From File\n"
 strIndex:		.asciz "Please enter the index # of the node: "
 strDeleted:		.asciz "String deleted."
 strSaved:		.asciz "Strings saved to file."
@@ -31,61 +32,101 @@ buffer:			.space 1024
 	.balign 4
 	
 _start:
-	mov r2, #0		@ Init memory consumption
-	mov r3, #0		@ Init num of nodes
+	mov r2, #0			@ Init memory consumption
+	mov r3, #0			@ Init num of nodes
 	ldr r8, =iInputInt	@ .word, where input # will be stored
-	
-	bl Header		@ Outputs header
 
 /* -------------- Begin Menu Loop While Input != '7' -------------- */
 whileNotQuit:
-	bl CLS			@ Clear screen
+	bl CLS				@ Clear screen
+	bl Header			@ Outputs header
 	ldr r2, =iMemory
 	ldr r2, [r2]
 	ldr r3, =iNodes
 	ldr r3, [r3]
-	bl Menu			@ Outputs menu - need mem consump in r2, # of nodes in r3
+	bl Menu				@ Outputs menu - need mem consump in r2, # of nodes in r3
 
 	ldr r1, =strInput	@ Prompt user for input
 	bl putstring
 	ldr r1, =iInputVal
 	ldr r2, =BUFSIZE
 	bl getstring		@ Get input from user
-	
-	ldr r1, =iInputVal
-	bl ascint32		@ Convert input to number
-	str r0, [r8]		@ Store into word (iInputInt)
+	bl ascint32			@ Convert input to number
+	@ldr r1, =iInputInt
+	@str r0, [r1]		@ Store into word (iInputInt)
+	@mov r8, r1
 	
 switch:
-	cmp r8, #7
+	cmp r0, #7
 	beq end
 	
-	cmp r8, #1
+	cmp r0, #1
 	beq ifChoice1
-	cmp r8, #'2a'
-	beq ifChoice2a
-	cmp r8, #'2b'
-	beq ifChoice2b
-	cmp r8, #3
+	cmp r0, #2
+	beq ifChoice2
+	cmp r0, #3
 	beq ifChoice3
-	cmp r8, #4
+	cmp r0, #4
 	beq ifChoice4
-	cmp r8, #5
+	cmp r0, #5
 	beq ifChoice5
-	cmp r8, #6
+	cmp r0, #6
 	beq ifChoice6
 
 
-ifChoice1:			@ If user chooses to view all strings
+ifChoice1:				@ If user chooses to view all strings
 	bl CLS
+	
+	ldr r1, =head
+	ldr r1, [r1]
+	ldr r3, =iNodes
+	ldr r3, [r3]
+	
 	bl ViewStrings
+	
+	ldr r5, =head		@ save linked list
+	str r1, [r5]
+	ldr r5, =tail
+	str r2, [r5]
+	
 	b whileNotQuit		@ Go back to menu
 	
-ifChoice2a:			@ If user chooses to add string from keyboard
+ifChoice2:			@ If user chooses to add string
+	ldr r1, =strChoice2
+	bl putstring
+	ldr r1, =strInput	@ Prompt user for 2nd input (a or b)
+	bl putstring
+	ldr r1, =iInputVal
+	ldr r2, =BUFSIZE
+	bl getstring		@ Get input from user
+
+	ldrb r1, [r1]
+
+	cmp r1, #'a'
+	beq fromKeyb
+	cmp r1, #'A'
+	beq fromKeyb
+	cmp r1, #'b'
+	beq fromFile
+	cmp r1, #'B'
+	beq fromFile
+
+fromKeyb:				@ If user chooses to add string from keyboard
+	ldr r1, =head
+	ldr r1, [r1]
+	ldr r2, =tail
+	ldr r2, [r2]
+	
 	bl AddFromKeyb
+	
+	ldr r5, =head		@ save linked list
+	str r1, [r5]
+	ldr r5, =tail
+	str r2, [r5]
+	
 	b whileNotQuit		@ Go back to menu
 	
-ifChoice2b:			@ If user chooses to add string from file
+fromFile:				@ If user chooses to add string from file
 	ldr r1, =head
 	ldr r1, [r1]
 	ldr r2, =tail
@@ -110,7 +151,7 @@ ifChoice2b:			@ If user chooses to add string from file
 	
 	b whileNotQuit		@ Go back to menu
 	
-ifChoice3:			@ If user chooses to delete string
+ifChoice3:				@ If user chooses to delete string
 	bl CLS
 	ldr r1, =strIndex
 	bl putstring
@@ -118,15 +159,15 @@ ifChoice3:			@ If user chooses to delete string
 	ldr r2, =BUFSIZE
 	bl getstring
 	ldr r1, =inputIndex
-	bl ascint32		@ Change into int
-	ldr r5, =iInput
+	bl ascint32			@ Change into int
+	ldr r5, =iInputInt
 	str r0, [r5]		@ Store index into r5
 	
 	ldr r1, =endl
 	bl putch
 	
 	ldr r3, [r5]		@ Move index to r3 to pass into func
-	mov r5, #0		@ Clear r5
+	mov r5, #0			@ Clear r5
 	ldr r1, =head
 	ldr r1, [r1]
 	ldr r2, =tail
@@ -161,7 +202,7 @@ ifChoice3:			@ If user chooses to delete string
 	
 	b whileNotQuit
 
-ifChoice4:			@ If user chooses to edit string
+ifChoice4:				@ If user chooses to edit string
 	bl CLS
 	ldr r1, =strIndex
 	bl putstring
@@ -169,8 +210,8 @@ ifChoice4:			@ If user chooses to edit string
 	ldr r2, =BUFSIZE
 	bl getstring
 	ldr r1, =inputIndex
-	bl ascint32		@ Change into int
-	ldr r5, =iInput
+	bl ascint32			@ Change into int
+	ldr r5, =iInputInt
 	str r0, [r5]		@ Store index into r5
 	
 	ldr r1, =head		@ edit string
@@ -187,7 +228,7 @@ ifChoice4:			@ If user chooses to edit string
 	
 	b whileNotQuit		@ Go back to menu
 	
-ifChoice5:			@ If user chooses to search for a string
+ifChoice5:				@ If user chooses to search for a string
 	bl CLS
 	ldr r1, =strSubstring
 	bl putstring
@@ -204,15 +245,15 @@ ifChoice5:			@ If user chooses to search for a string
 	
 	b whileNotQuit		@ Go back to menu
 	
-ifChoice6:			@ If user chooses to save file
+ifChoice6:				@ If user chooses to save file
 	bl CLS
-	bl SaveFile		@ # of nodes must be in r3
+	bl SaveFile			@ # of nodes must be in r3
 	ldr r1, =strSaved
 	bl putstring
 	b whileNotQuit		@ Go back to menu
 
 
 end:
-	mov r7, #1		@ Terminates program
+	mov r7, #1			@ Terminates program
 	svc 0
 	.end
