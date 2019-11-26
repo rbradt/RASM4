@@ -11,7 +11,7 @@
 strInput:		.asciz "Select: "
 infileName:		.asciz "input.txt"
 outFileName:		.asciz "output.txt"
-strIndex:		.asciz "Please enter the index # of the node to delete: "
+strIndex:		.asciz "Please enter the index # of the node: "
 strDeleted:		.asciz "String deleted."
 iInputVal:		.skip	BUFSIZE
 inputIndex:		.skip	BUFSIZE
@@ -98,6 +98,7 @@ ifChoice3:			@ If user chooses to delete string
 	bl putch
 	
 	mov r3, r5		@ Move index to r3 to pass into func
+	mov r5, #0		@ Clear r5
 	bl llRemoveAtIndex
 	
 	ldr r1, =strDeleted
@@ -106,7 +107,22 @@ ifChoice3:			@ If user chooses to delete string
 	b whileNotQuit
 
 ifChoice4:			@ If user chooses to edit string
+	bl CLS
+	ldr r1, =strIndex
+	bl putstring
+	ldr r1, =inputIndex
+	ldr r2, =BUFSIZE
+	bl getstring
+	ldr r1, =inputIndex
+	bl ascint32		@ Change into int
+	ldr r5, =iInput
+	str r0, [r5]		@ Store index into r5
+	
+	ldr r1, =endl
+	bl putch
+	
 	/* FUNC HERE */
+	
 	b whileNotQuit		@ Go back to menu
 	
 ifChoice5:			@ If user chooses to search for a string
@@ -122,11 +138,7 @@ ifChoice6:			@ If user chooses to save file
 
 
 
-/* -------------- */
 
-	bl CLS			@ Clear screen function
-	
-/* -------------- */
 
 end:
 	mov r7, #1		@ Terminates program
