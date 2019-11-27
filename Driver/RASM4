@@ -59,8 +59,7 @@ whileNotQuit:
 	bl getstring		@ Get input from user
 	bl ascint32			@ Convert input to number
 	
-	@str r0, [r8]
-	
+
 switch:
 	cmp r0, #1
 	beq ifChoice1
