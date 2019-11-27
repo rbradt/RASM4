@@ -8,7 +8,6 @@
 		R2: tail
 	------------------------------------------
 	Returns:
-		R0: # of nodes
 		R1: new head
 		R2: new tail
 		R3: data allocated
@@ -28,12 +27,9 @@ tail:		.word	0
 	.balign 4
 AddFromKeyb:
 	push {r4-r12, lr}
-	
-	ldr r5, =head
-	str r1, [r5]
-	ldr r5, =tail
-	str r2, [r5]
-	
+
+	mov r4, #0
+
 	ldr r1, =strPrompt
 	bl putstring
 	
@@ -41,7 +37,7 @@ AddFromKeyb:
 	ldr r2, =BUFSIZE
 	bl getstring
 	
-	bl String_copy
+	bl String_copy		@ Returns into r3 the string
 	mov r3, r0
 	
 	ldr r1, =head
@@ -49,22 +45,24 @@ AddFromKeyb:
 	ldr r2, =tail
 	ldr r2, [r2]
 	bl llInsert		@ Insert node into linked list
-	
-	ldr r5, =head	@ store new head and tail
+	@ add r6, #1		@ Keep track of # of nodes
+
+	ldr r5, =head		@ store new head and tail
 	str r1, [r5]
 	ldr r5, =tail
 	str r2, [r5]
-	
-	add r6, #1		@ Keep track of # of nodes
 
-	ldr r1, =szInput
+	push {r1-r3}
+	ldr r1, [r2]
 	bl String_length
-	
-	add r4, #9		@ keep track of data allocated (+1 for null since strings are asciz)
+
+	add r4, #9		@ keep track of data allocated
 	add r4, r4, r0
+	pop {r1-r3}
 	
-	mov r0, r6		@ R0: # of nodes
-	mov r3, r4		@ R3: data allocated
+	
+	@mov r0, r6
+	mov r3, r4
 	
 	
 	pop {r4-r12, lr}
