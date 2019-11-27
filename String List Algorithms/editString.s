@@ -44,7 +44,7 @@ editString:
 		
 		b locateNode
 		
-		
+replace:
 	/* Prompt user to enter new string */
 	ldr r1, =szPrompt	@ Prompt user to enter new string
 	bl putstring
@@ -63,7 +63,6 @@ editString:
 	
 	
 	/* Deallocate old string and store new string */
-replace:	
 	push {r0-r5}		@ get old string length
 	ldr r1, [r4]
 	bl String_length
@@ -72,7 +71,8 @@ replace:
 	push {r6}			@ free previous string
 	mov r0, r1
 	bl free
-	pop {r0-r6}
+	pop {r6}
+	pop {r0-r5}
 	
 	str r0, [r4]		@ store new string
 	
