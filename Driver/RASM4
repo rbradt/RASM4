@@ -110,6 +110,7 @@ ifChoice2:			@ If user chooses to add string
 	beq fromFile
 
 fromKeyb:				@ If user chooses to add string from keyboard
+	push {r1-r11}
 	ldr r1, =head
 	ldr r1, [r1]
 	ldr r2, =tail
@@ -131,6 +132,7 @@ fromKeyb:				@ If user chooses to add string from keyboard
 	ldr r6, [r5]
 	add r6, r6, #1
 	str r6, [r5]
+	pop {r1-r11}
 	
 	b whileNotQuit		@ Go back to menu
 	
