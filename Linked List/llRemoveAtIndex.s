@@ -38,7 +38,7 @@ llRemoveAtIndex:
 		ldr r4, [r4, #4]
 		
 		cmp r4, #0			@ index is out of range
-		beq return
+		beq outofrange
 		
 		cmp r7, r3			@ node was found
 		beq regular
@@ -72,6 +72,11 @@ llRemoveAtIndex:
 		mov r2, r6
 		
 		str r5, [r6, #4]	@ previous->next = current->next
+	
+		b return
+
+	outofrange:
+		mov r3, #0
 		
 	return:
 		pop {r4-r11, lr}

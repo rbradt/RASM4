@@ -28,6 +28,11 @@ tail:		.word	0
 AddFromKeyb:
 	push {r4-r12, lr}
 
+	ldr r4, =head
+	str r1, [r4]
+	ldr r4, =tail
+	str r2, [r4]
+
 	mov r4, #0
 
 	ldr r1, =strPrompt
@@ -45,7 +50,6 @@ AddFromKeyb:
 	ldr r2, =tail
 	ldr r2, [r2]
 	bl llInsert		@ Insert node into linked list
-	@ add r6, #1		@ Keep track of # of nodes
 
 	ldr r5, =head		@ store new head and tail
 	str r1, [r5]
@@ -60,11 +64,12 @@ AddFromKeyb:
 	add r4, r4, r0
 	pop {r1-r3}
 	
-	
-	@mov r0, r6
 	mov r3, r4
 	
-	
+	ldr r1, =head
+	ldr r1, [r1]
+	ldr r2, =tail
+	ldr r2, [r2]
 	pop {r4-r12, lr}
 	bx lr
   .end

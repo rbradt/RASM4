@@ -53,7 +53,7 @@ AddFromFile:
 		ldr r1, =buff		@ getline from text file
 		ldr r2, =fileHandle
 		ldr r2, [r2]
-		bl getline
+		bl get_line
 		ldr r8, =bytes
 		str r1, [r8]
 		

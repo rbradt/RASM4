@@ -14,6 +14,7 @@
 
 	.data
 szNewline: .asciz "\n"
+substring: .word 0
 
 	.text
 stringSearch:
@@ -26,7 +27,8 @@ stringSearch:
 	push {r1}				@ convert substring to lowercase
 	mov r1, r3
 	bl String_toLowerCase
-	mov r3, r0
+	ldr r3, =substring
+	str r0, [r3]
 	pop {r1}
 	
 	search:
@@ -34,20 +36,16 @@ stringSearch:
 		beq return
 		
 		ldr r4, [r1]			@ load string from linked list
-		
-		push {r1-r3}			@ convert string to lowercase
-		mov r1, r4
-		bl String_toLowerCase
-		
-		mov r1, r0			@ check if substring exists in string
-		mov r2, r3
-		bl String_indexOf_3
-		
-		push {r0}			@ free lowercase string
-		mov r0, r1			
-		bl free	
-		pop {r0}
-		pop {r1-r3}
+
+		cmp r4, #0
+		beq return	
+	
+		push {r1-r4}
+		mov r1, r4			@ check if substring exists in string
+		ldr r3, =substring
+		ldr r2, [r3]
+		bl String_compare
+		pop {r1-r4}
 		
 		cmp r0, #-1			@ if substring does not exist in string proceed to next string
 		beq continue
@@ -65,7 +63,8 @@ stringSearch:
 			b search
 	
 return:	
-	mov r0, r3				@ free lowercase substring
+	ldr r3, =substring
+	ldr r0, [r3]				@ free lowercase substring
 	bl free
 	pop {r1-r11, lr}
 	bx lr

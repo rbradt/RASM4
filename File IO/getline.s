@@ -1,5 +1,5 @@
 	.extern malloc
-	.global getline
+	.global get_line
 /**************************************************************************
  * 								getline
  *
@@ -17,7 +17,7 @@
  * note:
  *	the number of bytes read will be zero if at the end of the file
  **************************************************************************/
-getline:
+get_line:
 	push {r2-r11, lr}
 	mov r3, #0			@ clear buffer
 	str r3, [r1]
