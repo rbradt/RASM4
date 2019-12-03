@@ -13,8 +13,11 @@
  **************************************************************************/
 
 	.data
-szNewline: .asciz "\n"
-substring: .word 0
+szNewline:	.asciz "\n"
+szOpenB:	.asciz "["
+szClosedB:	.asciz "] "
+buffer:		.space	12
+substring:	.word 0
 
 	.text
 stringSearch:
@@ -31,7 +34,10 @@ stringSearch:
 	str r0, [r3]
 	pop {r1}
 	
+	mov r5, #-1
 	search:
+		add r5, r5, #1
+
 		cmp r1, #0			@ if current points to null the end of the linked list has been reached
 		beq return
 		
@@ -51,7 +57,15 @@ stringSearch:
 		beq continue
 		
 		print:
-			push {r1}		@ print string 
+			push {r1}		@ print string
+			ldr r1, =szOpenB
+			bl putstring
+			mov r0, r5
+			ldr r1, =buffer
+			bl intasc32
+			bl putstring
+			ldr r1, =szClosedB
+			bl putstring
 			mov r1, r4
 			bl putstring
 			ldr r1, =szNewline

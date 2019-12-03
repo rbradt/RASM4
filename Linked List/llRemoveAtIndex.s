@@ -69,7 +69,7 @@ llRemoveAtIndex:
 		pop {r1-r5}
 		
 		cmp r5, #0			@ update tail
-		mov r2, r6
+		moveq r2, r6
 		
 		str r5, [r6, #4]	@ previous->next = current->next
 	

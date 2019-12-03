@@ -13,6 +13,9 @@
 	
 	.global ViewStrings
 	.data
+szOB:		.asciz "["
+szCB:		.asciz "] "
+buffer:		.space 12
 temp:		.word	0
 emptyErr:	.asciz "\n*** ERROR - NO STRINGS IN LIST ***\nEXITING...\n"
 endl:		.byte	10
@@ -33,9 +36,18 @@ ViewStrings:
 loop:	
 	add r4, #1
 	
+	ldr r1, =szOB
+	bl putstring
+	
+	mov r0, r4
+	ldr r1, =buffer
+	bl intasc32
+	bl putstring
+
+	ldr r1, =szCB
+	bl putstring
+
 	ldr r5, [r2]		@ Deref temp
-	cmp r5, #0
-	beq endLoop
 	ldr r1, [r5]
 	bl putstring
 	
@@ -45,6 +57,9 @@ loop:
 	ldr r6, [r5, #4]
 	ldr r2, =temp
 	str r6, [r2]
+
+	cmp r6, #0
+	beq endLoop
 	
 	cmp r4, r3
 	blt loop			@ Loop if less than
