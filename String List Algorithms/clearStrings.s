@@ -17,6 +17,9 @@
 clearStrings:
 	push {r3-r11, lr}
 	
+	cmp r1, #0
+	beq return
+	
 	/* Delete head nodes until linked list is empty */
 	clearNode:
 		mov r3, #0
@@ -29,7 +32,8 @@ clearStrings:
 		
 		cmp r1, #0				@ linked list is empty when head points to a null
 		bne clearNode
-		
+	
+	return:	
 	mov r2, #0
 	pop {r3-r11, lr}
 	bx lr
